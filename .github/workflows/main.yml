@@ -9,19 +9,13 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    container:
-      image: kivy/buildozer:latest
-
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Fix ownership for workspace
-        run: git config --global --add safe.directory /__w/DailyTracker/DailyTracker
-
-      - name: Build APK
-        run: |
-          buildozer -v android debug
+      - name: Build with Buildozer
+        uses: JoshKarpel/action-buildozer@v1
+        with:
+          command: buildozer -v android debug
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
